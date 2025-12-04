@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Karnataka Govt Staff Training Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --accent-strong: #16a34a;
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --border-soft: #1f2937;
+      --danger: #ef4444;
+      --warning: #f97316;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Auth screen */
+
+    .auth-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      max-width: 420px;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 22px;
+      padding: 20px 18px 18px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .auth-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .auth-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e, #15803d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #052e16;
+      font-weight: 800;
+      box-shadow: 0 14px 30px rgba(34, 197, 94, 0.45);
+    }
+
+    .auth-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .auth-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .auth-tabs {
+      display: inline-flex;
+      gap: 4px;
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      margin-bottom: 14px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      border-radius: 999px;
+      border: none;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-soft);
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #022c22;
+      font-weight: 500;
+    }
+
+    .auth-form-group {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.8rem;
+    }
+
+    .auth-form-group label {
+      color: var(--text-soft);
+    }
+
+    .auth-input,
+    .auth-select {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #020617;
+      color: var(--text);
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      outline: none;
+    }
+
+    .auth-input:focus,
+    .auth-select:focus {
+      border-color: var(--accent);
+    }
+
+    .auth-button {
+      width: 100%;
+      margin-top: 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 197, 94, 0.8);
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #022c22;
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 8px 12px;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(34, 197, 94, 0.5);
+    }
+
+    .auth-button:hover {
+      filter: brightness(1.05);
+    }
+
+    .auth-info {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    .auth-error {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--danger);
+    }
+
+    /* App layout */
+
+    .app-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      max-width: 1320px;
+      margin: 12px auto 8px;
+      width: 100%;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #4ade80, #22c55e, #15803d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #052e16;
+      font-weight: 800;
+      box-shadow: 0 14px 30px rgba(34, 197, 94, 0.45);
+    }
+
+    .brand-text-title {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: 1.1rem;
+    }
+
+    .brand-text-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .user-switcher {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 999px;
+      padding: 6px 10px 6px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      backdrop-filter: blur(16px);
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .user-name-pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: #020617;
+      color: var(--text);
+      font-size: 0.8rem;
+    }
+
+    .btn-logout {
+      border-radius: 999px;
+      border: 1px solid rgba(248, 113, 113, 0.8);
+      background: rgba(127, 29, 29, 0.3);
+      color: #fecaca;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .btn-logout:hover {
+      background: rgba(127, 29, 29, 0.5);
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1320px;
+      margin: 0 auto 20px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Sidebar */
+
+    aside {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: var(--radius-xl);
+      padding: 18px 16px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .nav-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      border: 1px solid transparent;
+      transition: all 0.16s ease;
+    }
+
+    .nav-item span.icon {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(34, 197, 94, 0.12), transparent);
+      border-color: rgba(34, 197, 94, 0.6);
+      color: var(--accent);
+    }
+
+    .nav-item:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(148, 163, 184, 0.35);
+    }
+
+    .nav-footer {
+      margin-top: auto;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      border-top: 1px dashed rgba(55, 65, 81, 0.8);
+      padding-top: 10px;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.08);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      margin-top: 6px;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    /* Main content */
+
+    main {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .section-title span.emoji {
+      font-size: 1.2rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      border-radius: 999px;
+      padding: 4px 8px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-soft);
+    }
+
+    .layout-two-col {
+      display: grid;
+      grid-template-columns: 1.4fr 1.1fr;
+      gap: 14px;
+      align-items: flex-start;
+      min-height: 0;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), #020617);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 14px;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 6px;
+    }
+
+    .card-title {
+      font-size: 0.98rem;
+      font-weight: 500;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 0.72rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-soft);
+    }
+
+    .pill.green {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: rgba(34, 197, 94, 0.55);
+    }
+
+    .pill.orange {
+      background: rgba(249, 115, 22, 0.12);
+      color: var(--warning);
+      border-color: rgba(249, 115, 22, 0.6);
+    }
+
+    .pill.red {
+      background: rgba(248, 113, 113, 0.12);
+      color: var(--danger);
+      border-color: rgba(248, 113, 113, 0.65);
+    }
+
+    /* Progress & stats */
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.6fr);
+      gap: 12px;
+    }
+
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .stat-chip {
+      flex: 1;
+      min-width: 130px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px 10px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+    }
+
+    .stat-chip-label {
+      color: var(--text-soft);
+    }
+
+    .stat-chip-value {
+      font-weight: 500;
+    }
+
+    .stat-chip strong {
+      font-size: 0.86rem;
+    }
+
+    .progress-bar {
+      position: relative;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.8), #020617);
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #22c55e, #a3e635);
+      transition: width 0.3s ease;
+    }
+
+    /* Attendance row */
+
+    .attendance-row {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+
+    /* Portals list */
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .portal-card {
+      border-radius: 16px;
+      padding: 10px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.16), #020617);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.84rem;
+    }
+
+    .portal-name {
+      font-weight: 500;
+    }
+
+    .portal-tagline {
+      color: var(--text-soft);
+      font-size: 0.78rem;
+    }
+
+    .portal-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .button-row {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border-color: rgba(34, 197, 94, 0.8);
+      color: #022c22;
+      font-weight: 500;
+      box-shadow: 0 12px 25px rgba(34, 197, 94, 0.5);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-0.5px);
+    }
+
+    .btn-soft {
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    .btn-soft:hover {
+      border-color: rgba(148, 163, 184, 1);
+    }
+
+    .btn-sm {
+      padding: 4px 9px;
+      font-size: 0.74rem;
+    }
+
+    .btn-link {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-size: 0.76rem;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    a.link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.78rem;
+    }
+
+    a.link:hover {
+      text-decoration: underline;
+    }
+
+    /* Modules & details */
+
+    .modules-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+      gap: 12px;
+    }
+
+    .module-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 270px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .module-item {
+      border-radius: 14px;
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.96);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      font-size: 0.84rem;
+      transition: border 0.16s ease, background 0.16s ease, transform 0.08s ease;
+    }
+
+    .module-item.active {
+      border-color: rgba(34, 197, 94, 0.7);
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), #020617);
+      transform: translateY(-1px);
+    }
+
+    .module-title {
+      font-weight: 500;
+    }
+
+    .module-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.76rem;
+    }
+
+    .module-meta span {
+      color: var(--text-soft);
+    }
+
+    .module-progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.6);
+    }
+
+    .module-progress-dot.completed {
+      background: var(--accent);
+    }
+
+    .module-detail-body {
+      font-size: 0.82rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 270px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    ul.small {
+      padding-left: 16px;
+    }
+
+    ul.small li {
+      margin-bottom: 4px;
+      color: var(--text-soft);
+    }
+
+    /* Quiz */
+
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .quiz-question {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 14px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 10px;
+      font-size: 0.86rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .quiz-options label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--text-soft);
+    }
+
+    .quiz-summary {
+      font-size: 0.8rem;
+      margin-top: 6px;
+    }
+
+    .quiz-summary strong {
+      font-size: 0.9rem;
+    }
+
+    .chip-score {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      font-size: 0.74rem;
+      margin-left: 6px;
+      color: var(--text-soft);
+    }
+
+    /* Resources */
+
+    .resource-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.82rem;
+    }
+
+    .resource-item {
+      padding: 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    .resource-item-title {
+      font-weight: 500;
+    }
+
+    .resource-item-body {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 2px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      padding: 6px 0 10px;
+      border-top: 1px solid rgba(15, 23, 42, 0.9);
+    }
+
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .nav-section-title {
+        display: none;
+      }
+      .nav-list {
+        flex-direction: row;
+      }
+      .nav-item {
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .layout-two-col,
+      .modules-layout,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- AUTH SCREEN -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">KG</div>
+        <div>
+          <div class="auth-title" id="authTitle">Login to Training Portal</div>
+          <div class="auth-subtitle">
+            Local-only accounts for staff training (demo – not for production security).
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="authTabLogin" class="auth-tab active">Login</button>
+        <button id="authTabRegister" class="auth-tab">Register</button>
+      </div>
+
+      <form id="authForm">
+        <div class="auth-form-group">
+          <label for="authUsername">Username</label>
+          <input id="authUsername" class="auth-input" required />
+        </div>
+        <div class="auth-form-group">
+          <label for="authPassword">Password</label>
+          <input id="authPassword" class="auth-input" type="password" required />
+        </div>
+        <div class="auth-form-group">
+          <label for="authRole">Role (for future use)</label>
+          <select id="authRole" class="auth-select">
+            <option value="staff">Staff</option>
+            <option value="trainer">Trainer</option>
+          </select>
+        </div>
+        <button type="submit" id="authSubmitBtn" class="auth-button">Login</button>
+        <div id="authError" class="auth-error"></div>
+        <div class="auth-info">
+          Accounts, training data and attendance are stored in this browser’s
+          <code>localStorage</code> only. To simulate multiple staff, create multiple usernames.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- APP WRAPPER -->
+  <div id="appShellWrapper" class="app-wrapper" style="display:none;">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">KG</div>
+        <div>
+          <div class="brand-text-title">Karnataka Govt Training Hub</div>
+          <div class="brand-text-subtitle">Internal portal for staff learning & SOPs</div>
+        </div>
+      </div>
+
+      <div class="user-switcher">
+        <span>Logged in as</span>
+        <span class="user-name-pill" id="headerUserName">user</span>
+        <button class="btn-logout" id="btnLogout">Logout</button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside>
+        <div>
+          <div class="nav-section-title">Navigation</div>
+          <div class="nav-list">
+            <div class="nav-item active" data-section="dashboard">
+              <span class="icon">📊</span> Dashboard
+            </div>
+            <div class="nav-item" data-section="portals">
+              <span class="icon">🌐</span> Govt Portals
+            </div>
+            <div class="nav-item" data-section="modules">
+              <span class="icon">🎓</span> Training Modules
+            </div>
+            <div class="nav-item" data-section="quiz">
+              <span class="icon">📝</span> Quiz Practice
+            </div>
+            <div class="nav-item" data-section="resources">
+              <span class="icon">📁</span> Resources & SOPs
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-footer">
+          <div>Tip: Use this portal to onboard new staff into:</div>
+          <div class="nav-pill">
+            <span>✅</span> Seva Sindhu, Nadakacheri, Bhoomi, Sakala & RTO basics
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <!-- DASHBOARD -->
+        <section id="section-dashboard">
+          <div class="section-header">
+            <div>
+              <div class="section-title">
+                <span class="emoji">📊</span> Training Overview
+              </div>
+              <div class="section-subtitle" id="dashboardSubtitle">
+                Loading trainee data...
+              </div>
+            </div>
+            <div class="badge">Staff view</div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Progress Snapshot</div>
+                  <div class="card-subtitle">
+                    Modules, quizzes and attendance for current user
+                  </div>
+                </div>
+                <div class="pill green">
+                  <span>⚡</span> Local browser data
+                </div>
+              </div>
+
+              <div class="progress-bar">
+                <div class="progress-bar-fill" id="overallProgressFill"></div>
+              </div>
+
+              <div class="stats-row">
+                <div class="stat-chip">
+                  <div class="stat-chip-label">Modules completed</div>
+                  <div class="stat-chip-value">
+                    <strong id="statModulesCompleted">0</strong> /
+                    <span id="statModulesTotal">0</span>
+                  </div>
+                </div>
+                <div class="stat-chip">
+                  <div class="stat-chip-label">Best quiz score</div>
+                  <div class="stat-chip-value">
+                    <strong id="statBestScore">–</strong>
+                  </div>
+                </div>
+                <div class="stat-chip">
+                  <div class="stat-chip-label">Avg quiz score</div>
+                  <div class="stat-chip-value">
+                    <strong id="statAvgScore">–</strong>
+                  </div>
+                </div>
+                <div class="stat-chip">
+                  <div class="stat-chip-label">Attendance days</div>
+                  <div class="stat-chip-value">
+                    <strong id="statAttendanceDays">0</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="attendance-row">
+                <div id="attendanceMessage" class="card-subtitle">
+                  Attendance not marked for today.
+                </div>
+                <button class="btn btn-soft btn-sm" id="btnMarkAttendance">
+                  Mark present today
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Today's Focus</div>
+                  <div class="card-subtitle">
+                    Karnataka govt portals staff must know first
+                  </div>
+                </div>
+              </div>
+              <div class="portal-grid" id="dashboardPortalHighlights"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PORTALS -->
+        <section id="section-portals" style="display:none;">
+          <div class="section-header">
+            <div>
+              <div class="section-title">
+                <span class="emoji">🌐</span> Karnataka Govt Online Portals
+              </div>
+              <div class="section-subtitle">
+                Central reference for staff while guiding citizens
+              </div>
+            </div>
+            <div class="badge">Reference only (no login)</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Key Portals</div>
+                <div class="card-subtitle">
+                  Click “View official site” to open the real government website in a new tab.
+                </div>
+              </div>
+            </div>
+
+            <div class="portal-grid" id="portalGrid"></div>
+          </div>
+        </section>
+
+        <!-- MODULES -->
+        <section id="section-modules" style="display:none;">
+          <div class="section-header">
+            <div>
+              <div class="section-title">
+                <span class="emoji">🎓</span> Training Modules
+              </div>
+              <div class="section-subtitle">
+                Step-by-step guides for common services (for staff only)
+              </div>
+            </div>
+            <div class="badge">Mark completed via quiz</div>
+          </div>
+
+          <div class="card">
+            <div class="modules-layout">
+              <div>
+                <div class="card-header">
+                  <div>
+                    <div class="card-title">Module List</div>
+                    <div class="card-subtitle">
+                      Select a module to view details on the right.
+                    </div>
+                  </div>
+                </div>
+                <div class="module-list" id="moduleList"></div>
+              </div>
+
+              <div>
+                <div class="card-header">
+                  <div>
+                    <div class="card-title" id="moduleDetailTitle">Select a module</div>
+                    <div class="card-subtitle" id="moduleDetailSubtitle">
+                      Module objectives, portal used, and process steps will appear here.
+                    </div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" id="btnGoToQuiz" disabled>
+                    Go to Quiz →
+                  </button>
+                </div>
+                <div class="module-detail-body" id="moduleDetailBody">
+                  <p>Pick a module from the list on the left to get started.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section id="section-quiz" style="display:none;">
+          <div class="section-header">
+            <div>
+              <div class="section-title">
+                <span class="emoji">📝</span> Quiz Practice
+              </div>
+              <div class="section-subtitle">
+                Assess understanding of processes in Seva Sindhu, Nadakacheri, Bhoomi, Sakala & RTO basics.
+              </div>
+            </div>
+            <div class="badge" id="quizModuleLabel">Select module quiz</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Choose Module Quiz</div>
+                <div class="card-subtitle">
+                  Quizzes are linked to training modules. Use them during or after training.
+                </div>
+              </div>
+              <select id="quizModuleSelect" class="btn btn-soft btn-sm"></select>
+            </div>
+
+            <form id="quizForm">
+              <div class="quiz-container" id="quizContainer"></div>
+              <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Submit Answers
+                </button>
+                <div class="quiz-summary" id="quizSummary">
+                  No quiz taken yet.
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- RESOURCES -->
+        <section id="section-resources" style="display:none;">
+          <div class="section-header">
+            <div>
+              <div class="section-title">
+                <span class="emoji">📁</span> Resources & SOPs
+              </div>
+              <div class="section-subtitle">
+                Use these notes during classroom training sessions or refresher workshops.
+              </div>
+            </div>
+            <div class="badge">Customisable by training lead</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Trainer Notes</div>
+                <div class="card-subtitle">
+                  You can later connect this page to a backend or Google Drive to fetch live documents.
+                </div>
+              </div>
+            </div>
+
+            <div class="resource-list" id="resourceList"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      Karnataka Govt Staff Training Portal · Demo front-end.<br />
+      Extend with authentication backend, role-based access, and real data as needed.
+    </footer>
+  </div>
+
+  <script>
+    // ------------ DATA MODELS ------------
+
+    const PORTALS = [
+      {
+        id: "seva-sindhu",
+        name: "Seva Sindhu",
+        type: "Unified citizen services",
+        url: "https://sevasindhu.karnataka.gov.in",
+        tagline: "Single window for most Karnataka Government online services.",
+        keyUses: ["Certificates", "Pensions", "Labour services", "Transport integration"],
+        priority: "high"
+      },
+      {
+        id: "nadakacheri",
+        name: "Nadakacheri (AJR)",
+        type: "Revenue certificates",
+        url: "https://nadakacheri.karnataka.gov.in",
+        tagline: "Issue of Caste, Income, Residence and other certificates.",
+        keyUses: ["Caste certificate", "Income certificate", "Residence certificate"],
+        priority: "high"
+      },
+      {
+        id: "bhoomi",
+        name: "Bhoomi",
+        type: "Land records",
+        url: "https://landrecords.karnataka.gov.in",
+        tagline: "Access RTC / Pahani and mutation status for land parcels.",
+        keyUses: ["RTC", "Mutation", "Land maps"],
+        priority: "medium"
+      },
+      {
+        id: "sakala",
+        name: "Sakala",
+        type: "Service guarantee",
+        url: "https://sakala.karnataka.gov.in",
+        tagline: "Time-bound delivery of government services under Sakala Act.",
+        keyUses: ["GSC tracking", "Service timelines", "Delay grievance"],
+        priority: "medium"
+      },
+      {
+        id: "karnataka-one",
+        name: "Karnataka One",
+        type: "Urban service payments",
+        url: "https://www.karnatakaone.gov.in",
+        tagline: "Payment portal for BBMP, BESCOM, BWSSB, etc.",
+        keyUses: ["Bill payments", "Property tax", "Utility services"],
+        priority: "medium"
+      },
+      {
+        id: "khajane2",
+        name: "Khajane II",
+        type: "Treasury",
+        url: "https://k2.karnataka.gov.in",
+        tagline: "State treasury & challan payment portal.",
+        keyUses: ["Challan generation", "Salary / pension info"],
+        priority: "low"
+      },
+      {
+        id: "rto",
+        name: "Transport / RTO (Parivahan-integrated)",
+        type: "Transport services",
+        url: "https://parivahan.gov.in",
+        tagline: "Central portal for driving licence, vehicle registration & tax.",
+        keyUses: ["Driving licence", "Vehicle registration", "Tax payment"],
+        priority: "medium"
+      }
+    ];
+
+    const MODULES = [
+      {
+        id: "income-cert-seva",
+        title: "Issue Income Certificate via Seva Sindhu",
+        level: "Beginner",
+        duration: "30–40 min",
+        portalId: "seva-sindhu",
+        focus: "Revenue / Certificates",
+        objectives: [
+          "Understand eligibility and typical document requirements for income certificates.",
+          "Navigate Seva Sindhu portal to select the correct service.",
+          "Fill application details accurately and upload supporting documents.",
+          "Explain to citizens how to track status and download certificate."
+        ],
+        steps: [
+          "Open Seva Sindhu and login with department / citizen credentials as per role.",
+          "Select 'Revenue Department' → 'Income Certificate' service.",
+          "Verify identity (Aadhaar, mobile OTP) as per process.",
+          "Fill applicant details exactly as per ID proofs (name, address, relationship).",
+          "Capture income details based on documents / self-declaration norms.",
+          "Upload supporting documents in the prescribed format and size.",
+          "Collect fee (if applicable) and confirm payment.",
+          "Note down Application / GSC number and explain tracking process to citizen."
+        ]
+      },
+      {
+        id: "caste-cert-nadakacheri",
+        title: "Caste Certificate via Nadakacheri",
+        level: "Intermediate",
+        duration: "40–60 min",
+        portalId: "nadakacheri",
+        focus: "Reservation / Social welfare",
+        objectives: [
+          "Identify correct caste category and sub-caste mapping as per govt list.",
+          "Use Nadakacheri portal to register applications correctly.",
+          "Understand field enquiry and verification steps.",
+          "Communicate rejection reasons and re-application process to citizens."
+        ],
+        steps: [
+          "Explain types of caste certificates (SC/ST/OBC) and required evidence.",
+          "Login to Nadakacheri portal and select appropriate certificate service.",
+          "Fill applicant and family details carefully (as per previous certificates if any).",
+          "Scan and upload legacy documents, school records, ration card etc.",
+          "Forward application for field enquiry / Tahsildar approval as per SOP.",
+          "Monitor status and update applicant in case of additional document requirements."
+        ]
+      },
+      {
+        id: "rtc-bhoomi",
+        title: "RTC (Pahani) Download using Bhoomi",
+        level: "Beginner",
+        duration: "20–30 min",
+        portalId: "bhoomi",
+        focus: "Land records",
+        objectives: [
+          "Search land records using survey number / owner name / account ID.",
+          "Download RTC / Pahani and explain each key field to citizen.",
+          "Identify when mutation details are outdated and guide citizen next steps."
+        ],
+        steps: [
+          "Open Bhoomi portal and navigate to RTC view service.",
+          "Select district, taluk, hobli, village from drop-downs.",
+          "Enter survey number or other identifier to search the land record.",
+          "Verify ownership details with citizen’s documents.",
+          "Generate and download RTC; explain columns such as owner, extent, khata, etc.",
+          "If mutation pending / mismatch, explain process to update via concerned office."
+        ]
+      },
+      {
+        id: "sakala-timelines",
+        title: "Understanding Sakala Timelines & GSC Tracking",
+        level: "Beginner",
+        duration: "25–35 min",
+        portalId: "sakala",
+        focus: "Service guarantee",
+        objectives: [
+          "Explain the purpose of the Sakala Act to citizens.",
+          "Locate Sakala service timelines for common revenue and urban services.",
+          "Use GSC number to track application status and delays.",
+          "Know when and how to guide citizens to file delay complaints."
+        ],
+        steps: [
+          "Open the Sakala portal and navigate to the services list / timelines.",
+          "Search for the department and service name to see its time limit.",
+          "Use the GSC number to track the status of an ongoing application.",
+          "Interpret status messages (accepted, pending, rejected, disposed etc.).",
+          "Explain to the citizen what happens if the time limit is breached.",
+          "Guide the citizen on filing a grievance / appeal if service is delayed."
+        ]
+      },
+      {
+        id: "rto-basic-services",
+        title: "Basics of RTO Services & Parivahan Workflow",
+        level: "Intermediate",
+        duration: "35–45 min",
+        portalId: "rto",
+        focus: "Transport services",
+        objectives: [
+          "Identify commonly used RTO services (LL, DL, RC, tax).",
+          "Navigate the Parivahan portal to locate Karnataka RTO services.",
+          "Explain application flow and documents needed for LL/DL.",
+          "Help citizens understand slot booking and fee payment basics."
+        ],
+        steps: [
+          "Open the Parivahan portal and choose the relevant state / service.",
+          "List commonly used services for your office (LL, DL renewal, address change, etc.).",
+          "Show how to fill basic applicant details and choose the correct RTO.",
+          "Explain slot booking for LL/DL tests and required documents.",
+          "Describe payment confirmation, SMS alerts and printed receipts.",
+          "Highlight that final approval/issue depends on tests and RTO verification."
+        ]
+      }
+    ];
+
+    const QUIZZES = {
+      "income-cert-seva": [
+        {
+          q: "Which portal is primarily used to apply for an Income Certificate in Karnataka?",
+          options: ["Seva Sindhu", "Bhoomi", "Karnataka One", "Khajane II"],
+          correctIndex: 0,
+          explanation: "Income certificate applications are usually routed via Seva Sindhu under Revenue Department."
+        },
+        {
+          q: "What should staff always do after submitting an application for a citizen?",
+          options: [
+            "Close the browser immediately",
+            "Note down and share the Application / GSC number",
+            "Ask citizen to come back after 30 days",
+            "Delete the application"
+          ],
+          correctIndex: 1,
+          explanation: "The Application / GSC number is required to track status and download certificate."
+        }
+      ],
+      "caste-cert-nadakacheri": [
+        {
+          q: "Which portal is used mainly for issuing caste certificates?",
+          options: ["Nadakacheri (AJR)", "Seva Sindhu", "Bhoomi", "Sakala"],
+          correctIndex: 0,
+          explanation: "Nadakacheri (Atalji Jana Snehi Kendra) handles many revenue-related certificates including caste."
+        },
+        {
+          q: "Field enquiry for caste certificate is usually done by:",
+          options: ["Citizen themselves", "Tahsildar / authorised officials", "Bank manager", "School teacher"],
+          correctIndex: 1,
+          explanation: "Verification is done through revenue staff / Tahsildar as per the SOP."
+        }
+      ],
+      "rtc-bhoomi": [
+        {
+          q: "RTC / Pahani for agricultural land can be downloaded from:",
+          options: ["Bhoomi", "Seva Sindhu", "Nadakacheri", "Karnataka One"],
+          correctIndex: 0,
+          explanation: "Bhoomi is Karnataka's dedicated land records portal."
+        },
+        {
+          q: "Which information is typically found in RTC?",
+          options: [
+            "Vehicle registration number",
+            "Electricity bill history",
+            "Owner name, extent, khata details",
+            "Passport issue date"
+          ],
+          correctIndex: 2,
+          explanation: "RTC shows land-related data such as ownership, extent and khata numbers."
+        }
+      ],
+      "sakala-timelines": [
+        {
+          q: "What is the main purpose of the Sakala Act?",
+          options: [
+            "To issue driving licences",
+            "To guarantee time-bound delivery of govt services",
+            "To collect land tax",
+            "To maintain school records"
+          ],
+          correctIndex: 1,
+          explanation: "Sakala is focused on ensuring services are delivered within notified time limits."
+        },
+        {
+          q: "Which number is used to track an application under Sakala?",
+          options: ["PAN number", "GSC number", "Vehicle number", "Passbook number"],
+          correctIndex: 1,
+          explanation: "The GSC (Guarantee of Services to Citizens) number is used for tracking and escalation."
+        }
+      ],
+      "rto-basic-services": [
+        {
+          q: "Which portal is commonly used for RTO-related online services?",
+          options: ["Bhoomi", "Khajane II", "Parivahan", "Karnataka One"],
+          correctIndex: 2,
+          explanation: "Parivahan is the central transport portal integrated with state RTO systems."
+        },
+        {
+          q: "LL and DL usually refer to:",
+          options: [
+            "Land Lease and Demarcation",
+            "Learner’s Licence and Driving Licence",
+            "Labour License and Department License",
+            "Local List and District List"
+          ],
+          correctIndex: 1,
+          explanation: "LL stands for Learner’s Licence and DL for Driving Licence in RTO terminology."
+        }
+      ]
+    };
+
+    const RESOURCES = [
+      {
+        title: "Suggested Training Flow for New Recruits",
+        body: "Day 1: Overview of key portals & login safety. Day 2: Income & caste certificate hands-on practice. Day 3: Land records (Bhoomi) and RTC interpretation. Day 4: Sakala timelines, RTO basics & citizen grievance handling. Day 5: Assessment and feedback."
+      },
+      {
+        title: "Checklist Before Submitting Any Application",
+        body: "Verify applicant name spelling as per Aadhaar / ID. Check mobile number and email. Confirm documents are clear and readable. Ensure correct service and department selected. Explain tracking mechanism to citizen."
+      },
+      {
+        title: "Ideas to Extend this Portal",
+        body: "Add central authentication with a backend, role-based dashboards for trainers vs staff, connect to a database to store quiz results and attendance centrally, integrate video tutorials, and attach PDF SOPs for each service."
+      }
+    ];
+
+    // ------------ STORAGE KEYS & HELPERS ------------
+
+    const STORAGE_KEY_USERS = "kg_training_users_v1";
+    const STORAGE_KEY_SESSION = "kg_training_session_v1";
+    const STORAGE_KEY_TRAINING = "kg_training_state_v1";
+    const STORAGE_KEY_ATTENDANCE = "kg_training_attendance_v1";
+
+    function safeParse(json, fallback) {
+      try {
+        return json ? JSON.parse(json) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    // Users & session
+    function loadUsers() {
+      return safeParse(localStorage.getItem(STORAGE_KEY_USERS), {});
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(users));
+    }
+
+    function loadSession() {
+      return safeParse(localStorage.getItem(STORAGE_KEY_SESSION), null);
+    }
+
+    function saveSession(session) {
+      localStorage.setItem(STORAGE_KEY_SESSION, JSON.stringify(session));
+    }
+
+    // Training state (per user)
+    const appState = safeParse(localStorage.getItem(STORAGE_KEY_TRAINING), {});
+
+    function saveTrainingState() {
+      localStorage.setItem(STORAGE_KEY_TRAINING, JSON.stringify(appState));
+    }
+
+    function getUserState(userId) {
+      if (!appState[userId]) {
+        appState[userId] = {
+          moduleCompleted: {},
+          quizScores: {} // moduleId -> [scores]
+        };
+      }
+      return appState[userId];
+    }
+
+    // Attendance state
+    const attendanceState = safeParse(localStorage.getItem(STORAGE_KEY_ATTENDANCE), {});
+
+    function saveAttendanceState() {
+      localStorage.setItem(STORAGE_KEY_ATTENDANCE, JSON.stringify(attendanceState));
+    }
+
+    function getUserAttendanceDates(userId) {
+      const userAtt = attendanceState[userId] || {};
+      return Object.keys(userAtt);
+    }
+
+    function markAttendanceToday(userId) {
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      if (!attendanceState[userId]) {
+        attendanceState[userId] = {};
+      }
+      attendanceState[userId][today] = true;
+      saveAttendanceState();
+    }
+
+    // ------------ APP STATE ------------
+
+    const sections = {
+      dashboard: document.getElementById("section-dashboard"),
+      portals: document.getElementById("section-portals"),
+      modules: document.getElementById("section-modules"),
+      quiz: document.getElementById("section-quiz"),
+      resources: document.getElementById("section-resources")
+    };
+
+    let activeSectionKey = "dashboard";
+    let activeModuleId = MODULES[0]?.id || null;
+    let currentUserId = null;
+
+    // ------------ AUTH UI LOGIC ------------
+
+    const authScreen = document.getElementById("authScreen");
+    const appShellWrapper = document.getElementById("appShellWrapper");
+    const authTabLogin = document.getElementById("authTabLogin");
+    const authTabRegister = document.getElementById("authTabRegister");
+    const authTitle = document.getElementById("authTitle");
+    const authForm = document.getElementById("authForm");
+    const authUsername = document.getElementById("authUsername");
+    const authPassword = document.getElementById("authPassword");
+    const authRole = document.getElementById("authRole");
+    const authSubmitBtn = document.getElementById("authSubmitBtn");
+    const authError = document.getElementById("authError");
+    const headerUserName = document.getElementById("headerUserName");
+    const btnLogout = document.getElementById("btnLogout");
+
+    let authMode = "login"; // 'login' or 'register'
+
+    function setAuthMode(mode) {
+      authMode = mode;
+      authError.textContent = "";
+      if (mode === "login") {
+        authTabLogin.classList.add("active");
+        authTabRegister.classList.remove("active");
+        authTitle.textContent = "Login to Training Portal";
+        authSubmitBtn.textContent = "Login";
+      } else {
+        authTabLogin.classList.remove("active");
+        authTabRegister.classList.add("active");
+        authTitle.textContent = "Register New Account";
+        authSubmitBtn.textContent = "Register";
+      }
+    }
+
+    authTabLogin.addEventListener("click", () => setAuthMode("login"));
+    authTabRegister.addEventListener("click", () => setAuthMode("register"));
+
+    function initAppForUser(userId) {
+      currentUserId = userId;
+      headerUserName.textContent = userId;
+      authScreen.style.display = "none";
+      appShellWrapper.style.display = "flex";
+      appShellWrapper.style.flexDirection = "column";
+      switchSection("dashboard");
+    }
+
+    function showAuthScreen() {
+      authScreen.style.display = "flex";
+      appShellWrapper.style.display = "none";
+      authUsername.focus();
+    }
+
+    authForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      authError.textContent = "";
+      const username = authUsername.value.trim();
+      const password = authPassword.value;
+      const role = authRole.value;
+
+      if (!username || !password) {
+        authError.textContent = "Please enter both username and password.";
+        return;
+      }
+
+      const users = loadUsers();
+
+      if (authMode === "register") {
+        if (users[username]) {
+          authError.textContent = "Username already exists. Choose another.";
+          return;
+        }
+        users[username] = { password, role };
+        saveUsers(users);
+        saveSession({ currentUser: username });
+        initAppForUser(username);
+      } else {
+        const user = users[username];
+        if (!user || user.password !== password) {
+          authError.textContent = "Invalid username or password.";
+          return;
+        }
+        saveSession({ currentUser: username });
+        initAppForUser(username);
+      }
+    });
+
+    btnLogout.addEventListener("click", () => {
+      saveSession(null);
+      currentUserId = null;
+      showAuthScreen();
+    });
+
+    // ------------ NAVIGATION ------------
+
+    function switchSection(key) {
+      activeSectionKey = key;
+      Object.entries(sections).forEach(([sectionKey, el]) => {
+        el.style.display = sectionKey === key ? "block" : "none";
+      });
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        const section = item.getAttribute("data-section");
+        item.classList.toggle("active", section === key);
+      });
+
+      if (!currentUserId) return; // no user yet
+
+      if (key === "dashboard") {
+        refreshDashboard();
+      } else if (key === "portals") {
+        renderPortals();
+      } else if (key === "modules") {
+        renderModuleList();
+        renderModuleDetail(activeModuleId);
+      } else if (key === "quiz") {
+        initQuizModuleDropdown();
+        renderQuiz();
+      } else if (key === "resources") {
+        renderResources();
+      }
+    }
+
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const section = item.getAttribute("data-section");
+        switchSection(section);
+      });
+    });
+
+    // ------------ DASHBOARD ------------
+
+    function calculateStatsForUser(userId) {
+      const uState = getUserState(userId);
+      const totalModules = MODULES.length;
+      const completed = MODULES.filter((m) => uState.moduleCompleted[m.id]).length;
+
+      const scoresArray = Object.values(uState.quizScores).flat();
+      let bestScore = null;
+      let avgScore = null;
+
+      if (scoresArray.length > 0) {
+        bestScore = Math.max(...scoresArray);
+        avgScore = scoresArray.reduce((a, b) => a + b, 0) / scoresArray.length;
+      }
+
+      const completionPercent = totalModules > 0 ? Math.round((completed / totalModules) * 100) : 0;
+
+      const attendanceDates = getUserAttendanceDates(userId);
+      const attendanceDays = attendanceDates.length;
+      let lastAttendance = null;
+      if (attendanceDays > 0) {
+        lastAttendance = attendanceDates.sort().slice(-1)[0];
+      }
+
+      return {
+        totalModules,
+        completed,
+        bestScore,
+        avgScore,
+        completionPercent,
+        attendanceDays,
+        lastAttendance
+      };
+    }
+
+    const attendanceMessageEl = document.getElementById("attendanceMessage");
+    const btnMarkAttendance = document.getElementById("btnMarkAttendance");
+
+    function refreshDashboard() {
+      const stats = calculateStatsForUser(currentUserId);
+
+      document.getElementById("statModulesCompleted").textContent = stats.completed;
+      document.getElementById("statModulesTotal").textContent = stats.totalModules;
+      document.getElementById("overallProgressFill").style.width = stats.completionPercent + "%";
+
+      const bestText = stats.bestScore !== null ? stats.bestScore + "%" : "–";
+      const avgText = stats.avgScore !== null ? stats.avgScore.toFixed(1) + "%" : "–";
+      document.getElementById("statBestScore").textContent = bestText;
+      document.getElementById("statAvgScore").textContent = avgText;
+      document.getElementById("statAttendanceDays").textContent = stats.attendanceDays;
+
+      const traineeLabel = currentUserId;
+      let subtitle = `${traineeLabel} · ${stats.completed} of ${stats.totalModules} modules touched · ${stats.completionPercent}% complete`;
+      if (stats.attendanceDays > 0 && stats.lastAttendance) {
+        subtitle += ` · Last attendance: ${stats.lastAttendance}`;
+      }
+      document.getElementById("dashboardSubtitle").textContent = subtitle;
+
+      const today = new Date().toISOString().slice(0, 10);
+      const hasToday = getUserAttendanceDates(currentUserId).includes(today);
+      if (hasToday) {
+        attendanceMessageEl.textContent = "Attendance already marked for today (" + today + ").";
+        btnMarkAttendance.disabled = true;
+        btnMarkAttendance.textContent = "Present marked";
+      } else {
+        attendanceMessageEl.textContent = "Attendance not yet marked for today.";
+        btnMarkAttendance.disabled = false;
+        btnMarkAttendance.textContent = "Mark present today";
+      }
+
+      const highlightsContainer = document.getElementById("dashboardPortalHighlights");
+      highlightsContainer.innerHTML = "";
+      const importantPortals = PORTALS.filter((p) => p.priority === "high" || p.priority === "medium").slice(0, 3);
+
+      importantPortals.forEach((portal) => {
+        const div = document.createElement("div");
+        div.className = "portal-card";
+        div.innerHTML = `
+          <div class="portal-name">${portal.name}</div>
+          <div class="portal-tagline">${portal.tagline}</div>
+          <div class="portal-meta">
+            <span class="pill green">${portal.type}</span>
+            <span class="pill">${portal.keyUses.slice(0,2).join(" · ")}</span>
+          </div>
+          <div class="button-row">
+            <button class="btn btn-soft btn-sm" data-section="modules">
+              Related training
+            </button>
+            <a class="link" href="${portal.url}" target="_blank" rel="noopener noreferrer">
+              View official site →
+            </a>
+          </div>
+        `;
+        div.querySelector("button").addEventListener("click", () => {
+          switchSection("modules");
+        });
+        highlightsContainer.appendChild(div);
+      });
+    }
+
+    btnMarkAttendance.addEventListener("click", () => {
+      if (!currentUserId) return;
+      markAttendanceToday(currentUserId);
+      refreshDashboard();
+    });
+
+    // ------------ PORTALS ------------
+
+    function renderPortals() {
+      const grid = document.getElementById("portalGrid");
+      grid.innerHTML = "";
+      PORTALS.forEach((portal) => {
+        const card = document.createElement("div");
+        card.className = "portal-card";
+        const priorityClass =
+          portal.priority === "high" ? "green" : portal.priority === "medium" ? "orange" : "red";
+        const priorityText =
+          portal.priority === "high" ? "Core" : portal.priority === "medium" ? "Important" : "Advanced";
+
+        card.innerHTML = `
+          <div class="portal-name">${portal.name}</div>
+          <div class="portal-tagline">${portal.tagline}</div>
+          <div class="portal-meta">
+            <span class="pill ${priorityClass}">${priorityText}</span>
+            <span class="pill">${portal.type}</span>
+          </div>
+          <div class="card-subtitle" style="margin-top:4px;">Key uses: ${portal.keyUses.join(", ")}</div>
+          <div class="button-row">
+            <button class="btn btn-soft btn-sm" data-portal="${portal.id}">
+              Show related modules
+            </button>
+            <a class="link" href="${portal.url}" target="_blank" rel="noopener noreferrer">
+              View official site →
+            </a>
+          </div>
+        `;
+        card.querySelector("button").addEventListener("click", () => {
+          switchSection("modules");
+          const moduleForPortal = MODULES.find((m) => m.portalId === portal.id);
+          if (moduleForPortal) {
+            activeModuleId = moduleForPortal.id;
+            renderModuleList();
+            renderModuleDetail(activeModuleId);
+          }
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // ------------ MODULES ------------
+
+    function renderModuleList() {
+      const list = document.getElementById("moduleList");
+      list.innerHTML = "";
+      const uState = getUserState(currentUserId);
+
+      MODULES.forEach((mod) => {
+        const item = document.createElement("div");
+        item.className = "module-item" + (mod.id === activeModuleId ? " active" : "");
+        const completed = uState.moduleCompleted[mod.id];
+        const portalName = PORTALS.find((p) => p.id === mod.portalId)?.name || "Portal";
+
+        item.innerHTML = `
+          <div class="module-title">${mod.title}</div>
+          <div class="module-meta">
+            <span>${portalName}</span>
+            <span>• ${mod.level}</span>
+            <span>• ${mod.duration}</span>
+          </div>
+          <div class="module-meta" style="margin-top:4px;">
+            <div class="module-progress-dot ${completed ? "completed" : ""}"></div>
+            <span>${completed ? "Marked complete (quiz passed)" : "Not completed yet"}</span>
+          </div>
+        `;
+        item.addEventListener("click", () => {
+          activeModuleId = mod.id;
+          renderModuleList();
+          renderModuleDetail(activeModuleId);
+        });
+        list.appendChild(item);
+      });
+    }
+
+    function renderModuleDetail(moduleId) {
+      const detailTitle = document.getElementById("moduleDetailTitle");
+      const detailSubtitle = document.getElementById("moduleDetailSubtitle");
+      const detailBody = document.getElementById("moduleDetailBody");
+      const btnGoToQuiz = document.getElementById("btnGoToQuiz");
+
+      if (!moduleId) {
+        detailTitle.textContent = "Select a module";
+        detailSubtitle.textContent = "Module objectives, portal used, and process steps will appear here.";
+        detailBody.innerHTML = "<p>Pick a module from the list on the left to get started.</p>";
+        btnGoToQuiz.disabled = true;
+        return;
+      }
+
+      const mod = MODULES.find((m) => m.id === moduleId);
+      if (!mod) return;
+
+      const portalName = PORTALS.find((p) => p.id === mod.portalId)?.name || "Portal";
+
+      detailTitle.textContent = mod.title;
+      detailSubtitle.textContent = `${portalName} • ${mod.level} • ${mod.duration}`;
+
+      const objectivesHtml = mod.objectives.map((o) => `<li>${o}</li>`).join("");
+      const stepsHtml = mod.steps
+        .map((s, i) => `<li><strong>Step ${i + 1}:</strong> ${s}</li>`)
+        .join("");
+
+      detailBody.innerHTML = `
+        <div>
+          <strong>Learning objectives:</strong>
+          <ul class="small">${objectivesHtml}</ul>
+        </div>
+        <div>
+          <strong>Process steps (for demo only, confirm with latest SOPs):</strong>
+          <ul class="small">${stepsHtml}</ul>
+        </div>
+        <div class="card-subtitle">
+          Note: Always cross-check with latest circulars / orders from the department.
+        </div>
+      `;
+
+      btnGoToQuiz.disabled = false;
+      btnGoToQuiz.onclick = () => {
+        switchSection("quiz");
+        const select = document.getElementById("quizModuleSelect");
+        select.value = moduleId;
+        renderQuiz();
+      };
+    }
+
+    // ------------ QUIZ ------------
+
+    function initQuizModuleDropdown() {
+      const select = document.getElementById("quizModuleSelect");
+      select.innerHTML = "";
+      MODULES.forEach((mod) => {
+        const opt = document.createElement("option");
+        opt.value = mod.id;
+        opt.textContent = mod.title;
+        select.appendChild(opt);
+      });
+      if (activeModuleId) {
+        select.value = activeModuleId;
+      } else if (MODULES[0]) {
+        select.value = MODULES[0].id;
+        activeModuleId = MODULES[0].id;
+      }
+
+      select.onchange = () => {
+        activeModuleId = select.value;
+        renderQuiz();
+      };
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById("quizContainer");
+      const summary = document.getElementById("quizSummary");
+      const moduleLabel = document.getElementById("quizModuleLabel");
+
+      const modId = activeModuleId || MODULES[0]?.id;
+      if (!modId) {
+        container.innerHTML = "<p>No modules configured.</p>";
+        moduleLabel.textContent = "No module selected";
+        return;
+      }
+
+      activeModuleId = modId;
+      const mod = MODULES.find((m) => m.id === modId);
+      const questions = QUIZZES[modId] || [];
+      moduleLabel.textContent = "Module: " + mod.title;
+
+      if (questions.length === 0) {
+        container.innerHTML = "<p>No quiz configured for this module yet.</p>";
+        summary.textContent = "Trainer can add quiz questions later in code or via backend.";
+        return;
+      }
+
+      container.innerHTML = "";
+      questions.forEach((q, idx) => {
+        const qDiv = document.createElement("div");
+        qDiv.className = "quiz-question";
+        const optionsHtml = q.options
+          .map((opt, i) => {
+            const id = `q${idx}_opt${i}`;
+            return `
+              <label for="${id}">
+                <input type="radio" name="q${idx}" id="${id}" value="${i}" />
+                ${opt}
+              </label>`;
+          })
+          .join("");
+
+        qDiv.innerHTML = `
+          <div><strong>Q${idx + 1}.</strong> ${q.q}</div>
+          <div class="quiz-options">
+            ${optionsHtml}
+          </div>
+        `;
+        container.appendChild(qDiv);
+      });
+
+      const uState = getUserState(currentUserId);
+      const scores = uState.quizScores[modId] || [];
+      if (scores.length > 0) {
+        const last = scores[scores.length - 1];
+        const best = Math.max(...scores);
+        summary.innerHTML =
+          `Last score: <strong>${last}%</strong>` +
+          `<span class="chip-score">Best for this module: ${best}%</span>`;
+      } else {
+        summary.textContent = "No quiz attempts yet for this module.";
+      }
+    }
+
+    function handleQuizSubmit(event) {
+      event.preventDefault();
+      const modId = activeModuleId;
+      const questions = QUIZZES[modId] || [];
+      if (questions.length === 0) return;
+
+      let correctCount = 0;
+      const unanswered = [];
+
+      questions.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (!selected) {
+          unanswered.push(idx + 1);
+          return;
+        }
+        const value = parseInt(selected.value, 10);
+        if (value === q.correctIndex) {
+          correctCount++;
+        }
+      });
+
+      const summary = document.getElementById("quizSummary");
+      if (unanswered.length > 0) {
+        summary.textContent = "Please answer all questions (unanswered: " + unanswered.join(", ") + ").";
+        return;
+      }
+
+      const scorePercent = Math.round((correctCount / questions.length) * 100);
+      const uState = getUserState(currentUserId);
+      if (!uState.quizScores[modId]) {
+        uState.quizScores[modId] = [];
+      }
+      uState.quizScores[modId].push(scorePercent);
+
+      if (scorePercent >= 70) {
+        uState.moduleCompleted[modId] = true;
+      }
+
+      saveTrainingState();
+      summary.innerHTML =
+        `You scored <strong>${scorePercent}%</strong> (${correctCount} / ${questions.length} correct).` +
+        (scorePercent >= 70
+          ? `<span class="chip-score">✅ Marked module complete for this user.</span>`
+          : `<span class="chip-score">ℹ️ Score ≥ 70% required to mark as complete.</span>`);
+
+      renderModuleList();
+      refreshDashboard();
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", handleQuizSubmit);
+
+    // ------------ RESOURCES ------------
+
+    function renderResources() {
+      const list = document.getElementById("resourceList");
+      list.innerHTML = "";
+      RESOURCES.forEach((res) => {
+        const div = document.createElement("div");
+        div.className = "resource-item";
+        div.innerHTML = `
+          <div class="resource-item-title">${res.title}</div>
+          <div class="resource-item-body">${res.body}</div>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // ------------ INITIALISE ------------
+
+    (function init() {
+      const existingSession = loadSession();
+      if (existingSession && existingSession.currentUser) {
+        initAppForUser(existingSession.currentUser);
+      } else {
+        showAuthScreen();
+      }
+    })();
+  </script>
+</body>
+</html>
